@@ -13,8 +13,8 @@ class EmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: getWidth(width),
-      height: getWidth(height),
+      width: width,
+      height: height,
     );
   }
 }

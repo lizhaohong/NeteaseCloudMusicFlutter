@@ -6,6 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:netease_cloud_music_flutter/application.dart';
 import 'package:netease_cloud_music_flutter/loading_widget.dart';
+import 'package:netease_cloud_music_flutter/model/banners_model.dart';
+import 'package:netease_cloud_music_flutter/model/hot_search_model.dart';
+import 'package:netease_cloud_music_flutter/model/mv_model.dart';
+import 'package:netease_cloud_music_flutter/model/new_album_model.dart';
+import 'package:netease_cloud_music_flutter/model/recommend_song_model.dart';
 import 'package:netease_cloud_music_flutter/model/user_model.dart';
 import 'package:netease_cloud_music_flutter/route/navigator_util.dart';
 import 'package:netease_cloud_music_flutter/route/routes.dart';
@@ -32,7 +37,7 @@ class NetUtil {
       BuildContext context,
       String url, {
         Map<String, dynamic> params,
-        bool isShowLoading = true,
+        bool isShowLoading = false,
       }) async {
     if(isShowLoading) {
       Loading.showLoading(context);
@@ -44,6 +49,8 @@ class NetUtil {
       if(e == null) {
         return Future.error(Response(data: -1));
       } else if(e.response != null) {
+        print("DioError url = $url error = ${e.toString()}");
+
         if (e.response.statusCode >= 300 && e.response.statusCode < 400) {
           _reLogin();
           return Future.error(Response(data: -1));
@@ -51,6 +58,8 @@ class NetUtil {
           return Future.value(e.response);
         }
       } else {
+        print("DioError url = $url error = ${e.toString()}");
+
         return Future.error(Response(data: -1));
       }
     } finally {
@@ -67,7 +76,7 @@ class NetUtil {
   }
 
   static Future <Response> refreshLogin(BuildContext context) async {
-   return await _get(context, "/login/refresh", isShowLoading: false);
+   return await _get(context, "/login/refresh");
   }
 
   static Future <UserModel> login(BuildContext context, String userName, String password) async {
@@ -77,5 +86,55 @@ class NetUtil {
     });
 
     return UserModel.fromJson(response.data);
+  }
+
+  static Future <BannersModel> getBannerData(BuildContext context) async {
+    var response = await _get(context, "/banner", params: {"type" : 0}, isShowLoading: false);
+    return BannersModel.fromJson(response.data);
+  }
+
+  static Future <List<HotSearchModel>> getHotSearchData(BuildContext context) async {
+    var response = await _get(context, "/search/hot/detail");
+    var dataList = response.data['data'];
+
+    if(dataList is List) {
+      List<HotSearchModel> list = List();
+
+      dataList.forEach((json) {
+        list.add(HotSearchModel.fromJson(json));
+      });
+      return list;
+    } else {
+      return List();
+    }
+  }
+
+  static Future <RecommendSongModel> getRecommendSongData(BuildContext context) async {
+    var response = await _get(context, "/recommend/resource");
+
+    return RecommendSongModel.fromJson(response.data);
+  }
+
+  /// MV 排行
+  static Future<MVModel> getTopMvData(
+      BuildContext context, {
+        Map<String, dynamic> params = const {
+          'offset': 1,
+          'limit': 10,
+        },
+      }) async {
+    var response = await _get(context, '/top/mv', params: params);
+    return MVModel.fromJson(response.data);
+  }
+
+  static Future <NewAlbumModel> getNewAlbumData(BuildContext context) async {
+    Map<String, dynamic> params = const {
+      'offset': 1,
+      'limit': 10,
+    };
+
+    var response = await _get(context, "/top/album", params: params);
+
+    return NewAlbumModel.fromJson(response.data);
   }
 }

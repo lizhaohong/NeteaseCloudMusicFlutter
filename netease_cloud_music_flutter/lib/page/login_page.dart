@@ -85,7 +85,7 @@ class _LoginPageState extends State <LoginPage> with TickerProviderStateMixin {
             fontSize: 14,
           )),
         ),
-        EmptyWidget(height: 50),
+        EmptyWidget(height: getWidth(50)),
         TextField(
           controller: _phoneController,
           keyboardType: TextInputType.number,
@@ -97,7 +97,7 @@ class _LoginPageState extends State <LoginPage> with TickerProviderStateMixin {
             )
           ),
         ),
-        EmptyWidget(height: 40),
+        EmptyWidget(height: getWidth(40)),
         TextField(
           obscureText: true,
           controller: _passwordController,
@@ -110,7 +110,7 @@ class _LoginPageState extends State <LoginPage> with TickerProviderStateMixin {
               )
           ),
         ),
-        EmptyWidget(height: 120, width: 120,),
+        EmptyWidget(height: getWidth(120), width: getWidth(120)),
         Consumer<UserViewModel>(builder: (BuildContext context, UserViewModel userViewModel, Widget child){
           return CommonButtonWidget(
               onPressed: (){

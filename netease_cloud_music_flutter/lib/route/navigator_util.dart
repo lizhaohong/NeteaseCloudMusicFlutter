@@ -8,8 +8,28 @@ class NavigatorUtil {
       {bool replace = false,
         bool clearStack = false,
         Duration transitionDuration = const Duration(milliseconds: 250),
-        RouteTransitionsBuilder transitionBuilder}) {
+        RouteTransitionsBuilder transitionBuilder,
+        Map<String, dynamic> params
+      }) {
     FocusScope.of(context).requestFocus(FocusNode());
+
+    if(params != null) {
+      String query = "";
+      int index = 0;
+
+      for (var key in params.keys) {
+        var value = Uri.encodeComponent(params[key]);
+        if(index == 0) {
+          query = "?";
+        } else {
+          query = query + "\&";
+        }
+        query += "$key=$value";
+        index ++;
+      }
+
+      path = path + query;
+    }
 
     Application.router.navigateTo(context, path,
         replace: replace,
@@ -37,5 +57,13 @@ class NavigatorUtil {
 
   static goHomePage(BuildContext context) {
     _navigateTo(context, Routes.home);
+  }
+
+  static goSearchPage(BuildContext context) {
+    _navigateTo(context, Routes.search);
+  }
+
+  static goWebViewPage(BuildContext context, {Map<String, dynamic> params}) {
+    _navigateTo(context, Routes.web, params:params);
   }
 }

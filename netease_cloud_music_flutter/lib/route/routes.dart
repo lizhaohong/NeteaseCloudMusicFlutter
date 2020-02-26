@@ -14,12 +14,13 @@ class Routes {
   static String comment = "/comment";
   static String search = "/search";
   static String lookImg = "/look_img";
+  static String web = "/web";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(handlerFunc: (
         BuildContext context, Map<String, List<String>> parameters){
 
-      print("ROUTE WAS NOT FOUND");
+      print("ROUTE WAS NOT FOUND parameters = ${parameters.toString()}");
 
       return LoginPage();
     });
@@ -27,5 +28,7 @@ class Routes {
     router.define(root, handler: splashHandler);
     router.define(login, handler: loginHandler);
     router.define(home, handler: homeHandler);
+    router.define(search, handler: searchHandler);
+    router.define(web, handler: webHandler);
   }
 }

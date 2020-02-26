@@ -16,6 +16,13 @@ void main() {
 
   LogUtil.init();
 
+  ///配置错误界面
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Center(
+      child: Text("视图错误了"),
+    );
+  };
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<UserViewModel>(
       create: (_) => UserViewModel(),
@@ -38,7 +45,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       navigatorKey: Application.key,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white
       ),
       home: SplashPage(),
       onGenerateRoute: Application.router.generator,
