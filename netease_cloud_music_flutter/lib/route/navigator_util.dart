@@ -1,7 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:netease_cloud_music_flutter/application.dart';
+import 'package:netease_cloud_music_flutter/model/user_play_list_model.dart';
 import 'package:netease_cloud_music_flutter/route/routes.dart';
+import 'package:netease_cloud_music_flutter/utils/fluro_convert_utils.dart';
 
 class NavigatorUtil {
   static _navigateTo(BuildContext context, String path,
@@ -19,7 +21,7 @@ class NavigatorUtil {
 
       for (var key in params.keys) {
         var value = Uri.encodeComponent(params[key]);
-        if(index == 0) {
+        if (index == 0) {
           query = "?";
         } else {
           query = query + "\&";
@@ -30,6 +32,8 @@ class NavigatorUtil {
 
       path = path + query;
     }
+
+    print("lizhb come here path = $path");
 
     Application.router.navigateTo(context, path,
         replace: replace,
@@ -65,5 +69,9 @@ class NavigatorUtil {
 
   static goWebViewPage(BuildContext context, {Map<String, dynamic> params}) {
     _navigateTo(context, Routes.web, params:params);
+  }
+
+  static goPlayListPage(BuildContext context, {Playlist playlist}) {
+    _navigateTo(context, Routes.playList+"?data=${FluroConvertUtils.object2string(playlist)}");
   }
 }

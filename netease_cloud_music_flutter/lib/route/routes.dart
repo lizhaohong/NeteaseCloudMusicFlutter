@@ -30,5 +30,6 @@ class Routes {
     router.define(home, handler: homeHandler);
     router.define(search, handler: searchHandler);
     router.define(web, handler: webHandler);
+    router.define(playList, handler: playListHandler);
   }
 }

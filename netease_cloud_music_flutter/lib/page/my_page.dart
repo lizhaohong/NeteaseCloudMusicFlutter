@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:netease_cloud_music_flutter/application.dart';
 import 'package:netease_cloud_music_flutter/provider/play_list_provider_model.dart';
+import 'package:netease_cloud_music_flutter/route/navigator_util.dart';
 import 'package:netease_cloud_music_flutter/utils/common.dart';
 import 'package:netease_cloud_music_flutter/utils/common_text_style.dart';
 import 'package:netease_cloud_music_flutter/utils/net_util.dart';
+import 'package:netease_cloud_music_flutter/widget/loading_widget.dart';
 import 'package:netease_cloud_music_flutter/widget/play_list_title_widget.dart';
 import 'package:netease_cloud_music_flutter/widget/song_list_item_widget.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +38,12 @@ class _MyPageState extends State <MyPage> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + Application.bottomBarHeight),
         child: Column(
           children: <Widget>[
             _buildMenu(),
             Space(height: getWidth(25), width: double.infinity, color: Color(0xfff5f5f5)),
-            _buildPlayList()
+            _playListProviderModel == null ? Padding(padding: EdgeInsets.only(top: 20), child: CupertinoActivityIndicator()) : _buildPlayList()
           ],
         ),
       ),
@@ -83,7 +87,6 @@ class _MyPageState extends State <MyPage> with AutomaticKeepAliveClientMixin {
           count: _playListProviderModel.selfPlayList.length,
           trailing: GestureDetector(
             onTap: (){
-
         },
           child: IconButton(onPressed: (){
 
@@ -99,7 +102,7 @@ class _MyPageState extends State <MyPage> with AutomaticKeepAliveClientMixin {
           return GestureDetector(
             child: SongListItemWidget(playlist: _playListProviderModel.selfPlayList[index]),
             onTap: (){
-
+              NavigatorUtil.goPlayListPage(context, playlist: _playListProviderModel.selfPlayList[index]);
             },
           );
         }, itemCount: _playListProviderModel.selfPlayList.length),
@@ -116,11 +119,11 @@ class _MyPageState extends State <MyPage> with AutomaticKeepAliveClientMixin {
         ),
         Visibility(child: ListView.builder(
           shrinkWrap: true,
-            physics: ScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index){
               return GestureDetector(
                 onTap: (){
-
+                  NavigatorUtil.goPlayListPage(context, playlist: _playListProviderModel.collectPlayList[index]);
                 },
                 child: SongListItemWidget(playlist: _playListProviderModel.collectPlayList[index]),
               );
@@ -134,7 +137,7 @@ class _MyPageState extends State <MyPage> with AutomaticKeepAliveClientMixin {
   Widget _buildMenu() {
     return ListView.separated(
       shrinkWrap: true,
-      physics: ScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       itemCount: topMenuData.keys.length,
       itemBuilder: (BuildContext context, int index){
         String key = topMenuData.keys.toList()[index];

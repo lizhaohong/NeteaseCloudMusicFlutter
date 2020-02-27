@@ -146,7 +146,7 @@ class _SearchPageState extends State <SearchPage> {
         CustomFutureBuilder(futureFunc: NetUtil.getHotSearchData,builder: (BuildContext context,
             List<HotSearchModel>list){
           return ListView.builder(
-            physics: ScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             padding:EdgeInsets.symmetric(
                 horizontal: getWidth(40),
                 vertical: getWidth(30)), shrinkWrap:true, itemBuilder: (BuildContext context, int index){

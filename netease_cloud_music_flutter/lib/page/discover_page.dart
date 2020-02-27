@@ -61,7 +61,7 @@ class _DiscoverPageState extends State <DiscoverPage> with AutomaticKeepAliveCli
             padding: EdgeInsets.symmetric(horizontal: getWidth(25)),
             child: ListView.separated(
               shrinkWrap: true,
-              physics: ScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: mvModel.data.length,
               itemBuilder: (BuildContext context, int index){
                 return MVListWidget(mvData: mvModel.data[index]);
