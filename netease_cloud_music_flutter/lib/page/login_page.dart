@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:netease_cloud_music_flutter/provider/play_list_provider_model.dart';
 import 'package:netease_cloud_music_flutter/route/navigator_util.dart';
 import 'package:netease_cloud_music_flutter/utils/common.dart';
 import 'package:netease_cloud_music_flutter/utils/common_util.dart';
-import 'package:netease_cloud_music_flutter/viewModel/user_view_model.dart';
+import 'package:netease_cloud_music_flutter/provider/user_provider_model.dart';
 import 'package:netease_cloud_music_flutter/widget/common_button_widget.dart';
 import 'package:netease_cloud_music_flutter/widget/empty_widget.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +112,7 @@ class _LoginPageState extends State <LoginPage> with TickerProviderStateMixin {
           ),
         ),
         EmptyWidget(height: getWidth(120), width: getWidth(120)),
-        Consumer<UserViewModel>(builder: (BuildContext context, UserViewModel userViewModel, Widget child){
+        Consumer<UserProviderModel>(builder: (BuildContext context, UserProviderModel userViewModel, Widget child){
           return CommonButtonWidget(
               onPressed: (){
                 String phone = _phoneController.text;
@@ -128,6 +129,7 @@ class _LoginPageState extends State <LoginPage> with TickerProviderStateMixin {
                     password
                 ).then((value){
                   if(value != null) {
+                    Provider.of<PlayListProviderModel>(context).userModel = value;
                     NavigatorUtil.goHomePage(context);
                   }
                 });

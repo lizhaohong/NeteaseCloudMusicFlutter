@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:netease_cloud_music_flutter/application.dart';
-import 'package:netease_cloud_music_flutter/model/user_model.dart';
+import 'package:netease_cloud_music_flutter/provider/play_list_provider_model.dart';
+import 'package:netease_cloud_music_flutter/provider/user_provider_model.dart';
 import 'package:netease_cloud_music_flutter/route/navigator_util.dart';
 import 'package:netease_cloud_music_flutter/utils/common.dart';
 import 'package:netease_cloud_music_flutter/utils/net_util.dart';
-import 'package:netease_cloud_music_flutter/viewModel/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
@@ -69,7 +69,7 @@ class _SplashPageState extends State <SplashPage> with TickerProviderStateMixin 
   void goToLogin() async {
     await Application.initSharedPreferences();
 
-    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    UserProviderModel userViewModel = Provider.of<UserProviderModel>(context);
     userViewModel.initUser();
 
     if(userViewModel.user != null) {
@@ -78,6 +78,7 @@ class _SplashPageState extends State <SplashPage> with TickerProviderStateMixin 
           NavigatorUtil.goHomePage(context);
         }
       });
+      Provider.of<PlayListProviderModel>(context).userModel = userViewModel.user;
     } else {
       NavigatorUtil.goLoginPage(context);
     }

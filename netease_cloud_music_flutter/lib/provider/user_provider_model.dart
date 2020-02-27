@@ -7,7 +7,7 @@ import 'package:netease_cloud_music_flutter/utils/common_util.dart';
 import 'package:netease_cloud_music_flutter/utils/net_util.dart';
 import 'dart:convert' as convert;
 
-class UserViewModel with ChangeNotifier {
+class UserProviderModel with ChangeNotifier {
   UserModel _user;
 
   UserModel get user => _user;

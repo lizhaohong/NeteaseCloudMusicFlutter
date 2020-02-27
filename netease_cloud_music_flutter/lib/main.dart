@@ -1,9 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:netease_cloud_music_flutter/application.dart';
-import 'package:netease_cloud_music_flutter/viewModel/play_list_view_model.dart';
-import 'package:netease_cloud_music_flutter/viewModel/play_song_view_model.dart';
-import 'package:netease_cloud_music_flutter/viewModel/user_view_model.dart';
+import 'package:netease_cloud_music_flutter/provider/play_list_provider_model.dart';
+import 'package:netease_cloud_music_flutter/provider/play_song_provider_model.dart';
+import 'package:netease_cloud_music_flutter/provider/user_provider_model.dart';
 import 'package:netease_cloud_music_flutter/page/splash_page.dart';
 import 'package:netease_cloud_music_flutter/route/routes.dart';
 import 'package:netease_cloud_music_flutter/utils/log_util.dart';
@@ -24,14 +24,14 @@ void main() {
   };
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<UserViewModel>(
-      create: (_) => UserViewModel(),
+    ChangeNotifierProvider<UserProviderModel>(
+      create: (_) => UserProviderModel(),
     ),
-    ChangeNotifierProvider<PlaySongViewModel>(
-      create: (_) => PlaySongViewModel(),
+    ChangeNotifierProvider<PlaySongProviderModel>(
+      create: (_) => PlaySongProviderModel(),
     ),
-    ChangeNotifierProvider<PlayListViewModel>(
-      create: (_) => PlayListViewModel(),
+    ChangeNotifierProvider<PlayListProviderModel>(
+      create: (_) => PlayListProviderModel(),
     )
   ], child: MyApp()));
 }

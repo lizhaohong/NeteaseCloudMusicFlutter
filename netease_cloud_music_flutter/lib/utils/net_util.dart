@@ -12,6 +12,7 @@ import 'package:netease_cloud_music_flutter/model/mv_model.dart';
 import 'package:netease_cloud_music_flutter/model/new_album_model.dart';
 import 'package:netease_cloud_music_flutter/model/recommend_song_model.dart';
 import 'package:netease_cloud_music_flutter/model/user_model.dart';
+import 'package:netease_cloud_music_flutter/model/user_play_list_model.dart';
 import 'package:netease_cloud_music_flutter/route/navigator_util.dart';
 import 'package:netease_cloud_music_flutter/route/routes.dart';
 import 'package:netease_cloud_music_flutter/utils/common_util.dart';
@@ -136,5 +137,11 @@ class NetUtil {
     var response = await _get(context, "/top/album", params: params);
 
     return NewAlbumModel.fromJson(response.data);
+  }
+
+  static Future <UserPlayListModel> getPlayListData(BuildContext context,{@required Map<String, dynamic>params}) async {
+    var response = await _get(context, "/user/playlist", params: params);
+
+    return UserPlayListModel.fromJson(response.data);
   }
 }
