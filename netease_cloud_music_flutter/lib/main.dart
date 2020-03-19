@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:netease_cloud_music_flutter/di/global_di.dart';
-import 'package:netease_cloud_music_flutter/home/ui/home_page_route.dart';
+import 'package:netease_cloud_music_flutter/page/home/home_page_routes.dart';
 import 'package:netease_cloud_music_flutter/route/navigation_service.dart';
 import 'package:netease_cloud_music_flutter/route_configs.dart';
 
@@ -41,11 +41,7 @@ class MyApp extends StatelessWidget implements NavigatorServiceProvider {
         navigatorObservers: navigatorObservers,
         onGenerateRoute: (settings) {
           var pageBuilder = pageRoutes[settings.name];
-//          if (settings.name == "/") {
-//            return HomePageRoute<Map<dynamic, dynamic>>(
-//                widget:
-//                pageBuilder(context, settings.name, settings.arguments));
-//          }
+
           return MaterialPageRoute<Map<dynamic, dynamic>>(
               settings: settings,
               builder: (context) {

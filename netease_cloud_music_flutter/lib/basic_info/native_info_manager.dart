@@ -1,5 +1,3 @@
-
-
 import 'package:netease_cloud_music_flutter/basic_info/basic_info_channel.dart';
 import 'package:netease_cloud_music_flutter/basic_info/model/app_info.dart';
 import 'package:netease_cloud_music_flutter/basic_info/model/device_info.dart';

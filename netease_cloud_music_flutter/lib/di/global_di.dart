@@ -11,12 +11,17 @@ import 'package:netease_cloud_music_flutter/common/network/http.dart';
 import 'package:netease_cloud_music_flutter/widgets/configuration_change_aware_widget.dart';
 import 'package:netease_cloud_music_flutter/serializers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Class that initial and provide the global used instance.
 class _DIProvider {
   _DIProvider() {
     _init();
   }
+
+  SharedPreferences _sharedPreferences;
+
+  SharedPreferences get sharedPreferences => _sharedPreferences;
 
   NativeInfoManager _nativeInfoManager;
 
@@ -34,11 +39,12 @@ class _DIProvider {
 
   CommonRequest get commonRequest => _commonRequest;
 
-  void _init() {
+  void _init() async {
     _nativeInfoManager =
         NativeInfoManager(BasicInfoChannel(), SignatureChannel());
     _nativeEventDispatcher = NativeEventDispatcher();
     _serialization = Serialization(serializers);
+    _sharedPreferences = await SharedPreferences.getInstance();
     List<Interceptor> interceptors = [
 //      HostInterceptor(_nativeInfoManager),
 //      HeaderInterceptor(
@@ -68,6 +74,7 @@ class GlobalDI extends StatelessWidget {
             value: _diProvider.nativeEventDispatcher),
         Provider<Serialization>.value(value: _diProvider.serialization),
         Provider<CommonRequest>.value(value: _diProvider.commonRequest),
+        Provider<SharedPreferences>.value(value: _diProvider.sharedPreferences),
       ],
       child: ConfigurationChangeAwareWidget(
           nativeEventDispatcher: _diProvider._nativeEventDispatcher,

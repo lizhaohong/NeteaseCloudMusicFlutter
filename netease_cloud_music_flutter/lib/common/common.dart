@@ -10,3 +10,5 @@ export 'package:netease_cloud_music_flutter/common/network/http.dart';
 export 'package:netease_cloud_music_flutter/common/network/serialization.dart';
 export 'package:netease_cloud_music_flutter/common/protocol/cancellable.dart';
 export 'package:netease_cloud_music_flutter/common/bloc/bloc.dart';
+export 'package:netease_cloud_music_flutter/route/navigation_service.dart';
+export 'package:provider/provider.dart';

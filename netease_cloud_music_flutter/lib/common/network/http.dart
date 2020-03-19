@@ -18,9 +18,12 @@ String methodName(RequestMethod method) {
 
 class HTTP {
   var _dio;
+
+  static final String _baseUrl = 'http://10.2.35.225:3000';
+
   static final _instance = HTTP();
   HTTP() {
-    _dio = Dio();
+    _dio = Dio(BaseOptions(baseUrl: _baseUrl));
     if (kDebugMode) {
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {

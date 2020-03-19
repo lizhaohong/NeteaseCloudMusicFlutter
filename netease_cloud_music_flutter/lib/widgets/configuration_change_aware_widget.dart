@@ -4,8 +4,8 @@ import 'package:netease_cloud_music_flutter/channels/event/native_event_dispatch
 import 'package:provider/provider.dart';
 
 class _ConfigurationChangeNotifier with ChangeNotifier {
-  _ConfigurationChangeNotifier(this._nativeEventDispatcher,
-      this._nativeInfoManager) {
+  _ConfigurationChangeNotifier(
+      this._nativeEventDispatcher, this._nativeInfoManager) {
     _initEvent();
   }
 
